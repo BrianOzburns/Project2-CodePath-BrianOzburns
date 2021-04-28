@@ -24,6 +24,11 @@ class HomeTableViewController: UITableViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.loadTweets()
+    }
+    
     @objc func loadTweets(){
         
         numberOfTweets = 20
@@ -67,6 +72,22 @@ class HomeTableViewController: UITableViewController {
         })
     }
     
+    /*
+    func getRelativeTime(timeString: String) -> String {
+        
+        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        let timeStringMonth = timeString
+        var monthNumber = 0
+        for (index, month) in months.enumerated() {
+            let monthAbr = timeString[..index<7]
+            if (monthAbr == month) {
+                monthNumber = index + 1
+            }
+        }
+        return timeString
+    }
+    */
+    
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == tweetArray.count {
@@ -88,16 +109,33 @@ class HomeTableViewController: UITableViewController {
         
         let user = tweetArray[indexPath.row]["user"] as! NSDictionary
         
+        // Username and tweet content labels
         cell.userNameLabel.text = user["name"] as? String
         cell.tweetContentLabel.text = tweetArray[indexPath.row]["text"] as? String
         
+        // Profile image creation
         let imageUrl = URL(string: (user["profile_image_url_https"] as? String)!)
         let data = try? Data(contentsOf: imageUrl!)
         
         if let imageData = data {
             cell.profileImageView.image = UIImage(data: imageData)
+            
+            /*
+            cell.timePostedLabel.text = getRelativeTime(timeString: (user["created_at"] as? String)!)
+            */
+            
+            cell.timePostedLabel.text = user["created_at"] as? String
+            
+            
         }
         
+        // Favoriting items
+        cell.setFavorite(tweetArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
+        
+        // Retweeting items
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
+
         return cell
     }
     
