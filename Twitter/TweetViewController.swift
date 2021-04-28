@@ -10,9 +10,13 @@ import UIKit
 
 class TweetViewController: UIViewController {
 
+    @IBOutlet weak var profileView: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tweetTextView.becomeFirstResponder()
+        profileView.layer.cornerRadius = profileView.frame.height / 2
 
         // Do any additional setup after loading the view.
     }
@@ -34,10 +38,33 @@ class TweetViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
- 
     
+    /*
+    var profileArray = [NSDictionary]()
     
-
+    let myUrl = "https://api.twitter.com/1.1/account/settings.json"
+    let name = "Brian Ozawa Burns"
+    
+    TwitterAPICaller.client?.getDictionaryRequest(url: myUrl, parameters: ["Name": name], success: { (profile: [NSDictionary]) in
+        
+        self.profileArray.removeAll()
+        for data in profile {
+            self.profileArray.append(data)
+            
+        }
+        
+    }, failure: { (Error) in
+        print("Could not retrieve profile data.")
+    })
+    
+    let imageUrl = URL(string: (user["profile_image_url_https"] as? String)!)
+    let data = try? Data(contentsOf: imageUrl!)
+    
+    if let imageData = data {
+        cell.profileView.image = UIImage(data: imageData)
+    }
+    */
+    
     /*
     // MARK: - Navigation
 

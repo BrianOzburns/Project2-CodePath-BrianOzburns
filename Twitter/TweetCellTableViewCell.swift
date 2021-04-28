@@ -20,6 +20,8 @@ class TweetCellTableViewCell: UITableViewCell {
     var retweeted: Bool = false
     var favorited: Bool = false
     var tweetId: Int = -1
+
+    
     
     @IBAction func retweet(_ sender: Any) {
         let toBeRetweeted = !retweeted
