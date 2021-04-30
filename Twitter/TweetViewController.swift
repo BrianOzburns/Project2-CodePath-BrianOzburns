@@ -8,19 +8,28 @@
 
 import UIKit
 
-class TweetViewController: UIViewController {
+class TweetViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var profileView: UIImageView!
-    
+    @IBOutlet weak var tweetTextView: UITextView!
+    @IBOutlet weak var charCount: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tweetTextView.delegate = self
+        
         tweetTextView.becomeFirstResponder()
         profileView.layer.cornerRadius = profileView.frame.height / 2
-
+        
+        tweetTextView.layer.cornerRadius = 16
+        tweetTextView.layer.borderWidth = 1
+        if #available(iOS 13.0, *) {
+            tweetTextView.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+        } else {
+            
+        }
         // Do any additional setup after loading the view.
     }
-    @IBOutlet weak var tweetTextView: UITextView!
     
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -74,5 +83,21 @@ class TweetViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func textViewDidChange(_ textView: UITextView) {
+        
+        charCount.text = "\(textView.text.count)"
+        
+        /*
+        if (textView == tweetTextView) {
+            let strLength = textView.text?.count ?? 0
+            let lengthToAdd = string.count
+            let lengthCount = strLength + lengthToAdd
+            self.charCount.text = "\(lengthCount)"
+        }
+        return true
+        */
+        
+    }
 
 }

@@ -136,6 +136,13 @@ class HomeTableViewController: UITableViewController {
         
         // Retweeting items
         cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
+        
+        // retweet and fav count labels
+        let retweetCounted = tweetArray[indexPath.row]["retweet_count"] as! Int
+        let favCounted = tweetArray[indexPath.row]["favorite_count"] as! Int
+        
+        cell.retweetCount.text = "\(retweetCounted)"
+        cell.favCount.text = "\(favCounted)"
 
         return cell
     }
